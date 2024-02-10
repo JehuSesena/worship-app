@@ -2,7 +2,7 @@
     @if ($imagesInfo)
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         @foreach ($imagesInfo as $imageInfo)
-        <button wire:click="selectSong('{{ $imageInfo['id'] }}')">
+        <button wire:click.prevent="selectSong('{{ $imageInfo['id'] }}')">
             @if (!in_array($imageInfo['id'], $selectedSongs))
             <div
                 class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-3 hover:cursor-pointer">

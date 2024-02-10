@@ -15,7 +15,18 @@ class SongsList extends Component
     protected $listeners = [
         'searchSongInDatabase',
         'songRemovedFromPlaylist',
+        'sentSongs'
     ];
+
+    public function sentSongs($songs)
+    {
+        foreach ($songs as $song) {
+            if (in_array($song['id'], $this->selectedSongs)) {
+                continue;
+            }
+            $this->selectedSongs[] = $song['id'];
+        }
+    }
 
     public function render()
     {
@@ -32,16 +43,16 @@ class SongsList extends Component
         $this->selectedSongs[] = $id;
     }
 
-    private function giveMeSongs()
+    public function requestSongs()
     {
-        $this->emit('create-play-list', 'giveMeSongs');
+        $this->emitTo('create-play-list', 'requestSongs');
     }
 
     public function mount()
     {
         // $this->getSomeImages();
         $this->selectedSongs = [];
-        // $this->giveMeSongs();
+        // $this->requestSongs();
     }
 
     private function getSomeImages()
@@ -81,6 +92,11 @@ class SongsList extends Component
 
     public function selectSong($id)
     {
+        if (in_array($id, $this->selectedSongs)) {
+            $this->emitTo('create-play-list', 'deleteSongFromPlaylist', $id);
+            $this->songRemovedFromPlaylist($id);
+            return;
+        }
         $this->emitTo('create-play-list', 'addSongToPlaylist', $id);
         $this->songAddedToPlaylist($id);
     }

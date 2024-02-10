@@ -16,6 +16,11 @@ class SearchBar extends Component
         return view('livewire.components.search-bar');
     }
 
+    public function mount()
+    {
+        $this->emitTo($this->componentName, 'searchSongInDatabase', ' ');
+    }
+
     public function updatedSearch()
     {
         $this->emitTo($this->componentName, 'searchSongInDatabase', $this->search);

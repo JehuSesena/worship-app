@@ -17,8 +17,15 @@ class CreatePlayList extends Component
         'closeModal',
         'songUploaded',
         'addSongToPlaylist',
-        'giveMeSongs'
+        'deleteSongFromPlaylist',
+        'requestSongs'
     ];
+
+    public function requestSongs()
+    {
+        dd('requestSongs');
+        $this->emitTo('songs-list', 'sentSongs', $this->selectedSongs);
+    }
 
     public function mount()
     {
@@ -34,15 +41,6 @@ class CreatePlayList extends Component
             'id' => $id, 
             'title' => $songData->title
         ];
-    }
-
-    private function saveAll()
-    {
-        $playlist = Playlist::create([
-            'name' => $this->name
-
-        ]);
-        // $songData->playlists()->attach($this->playlistId);
     }
 
     public function closeModal($componentName)
@@ -93,8 +91,6 @@ class CreatePlayList extends Component
         $this->reset([
             'selectedSongs'
         ]);
-
-        session()->flash('message', 'Playlist created successfully.');
     }
 
     private function getSongsId()
@@ -122,7 +118,6 @@ class CreatePlayList extends Component
         if (in_array($id, $this->getSongsId())) 
         {
             $this->deleteSongFromPlaylist($id);
-            return;
         }
 
         $songData = Song::find($id);
@@ -130,6 +125,7 @@ class CreatePlayList extends Component
             'id' => $id, 
             'title' => $songData->title
         ];
+
         $this->emitTo('songs-list', 'songAddedToPlaylist', $id);
     }
 

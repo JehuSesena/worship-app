@@ -38,11 +38,15 @@
             @endif
             @if ($selectedSongs)
                 @foreach ($selectedSongs as $song)
-                <div class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-                    <div>
-                        {{ $song['title'] }}
+                <div class="flex mb-4">
+                    <div class="flex sm:w-10/12 lg:w-11/12 w-8/12 items-center p-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                        <div>
+                            {{ $song['title'] }}
+                        </div>
                     </div>
-                    <button type="button" wire:click="deleteSongFromPlaylist('{{ $song['id'] }}')" class="ml-auto text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 me-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">X</button>
+                    <div class="flex sm:w-2/12 lg:w-1/12 w-4/12 justify-center">
+                        <button type="button" wire:click="deleteSongFromPlaylist('{{ $song['id'] }}')" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">X</button>
+                    </div>
                 </div>
                 
                 @endforeach

@@ -24,4 +24,10 @@ class IndexList extends Component
     {
         return Playlist::all();
     }
+
+    public function deletePlaylist($id)
+    {
+        Playlist::destroy($id);
+        $this->playlists = $this->getPlaylists();
+    }
 }
